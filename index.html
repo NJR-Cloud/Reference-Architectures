@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeremiah Kim — Enterprise AI &amp; Cloud Reference Architectures</title>
+<meta name="description" content="Reference architectures for enterprise AI platforms, knowledge fabrics, governance, LLMOps, and multi-cloud — by Jeremiah Kim, Principal Cloud &amp; AI Architect.">
+<style>
+  :root{
+    --navy:#0B1E38; --navy2:#143C6B; --accent:#2E6FB0; --ink:#1f2c39;
+    --muted:#5a6b7c; --bg:#f5f8fc; --card:#ffffff; --border:#dce3eb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* ===== EDIT YOUR NAME / TITLE / CONTACT HERE ===== */
+  header.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:46px 20px 40px;}
+  .hero-inner{max-width:1140px;margin:0 auto;}
+  .hero h1{margin:0 0 6px;font-size:30px;font-weight:800;letter-spacing:.2px;}
+  .hero .title{font-size:16px;font-weight:600;color:#cfe0f3;margin-bottom:14px;}
+  .hero p{max-width:780px;color:#d7e3f2;font-size:14.5px;margin:0 0 18px;}
+  .contact{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;}
+  .contact a,.contact span{color:#eaf2fb;}
+  .contact a:hover{color:#fff;}
+
+  main{max-width:1140px;margin:0 auto;padding:34px 20px 10px;}
+  .lead{font-size:15px;color:var(--muted);max-width:840px;margin:0 0 30px;}
+
+  article.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:22px 22px 18px;margin-bottom:26px;box-shadow:0 2px 10px rgba(11,31,58,.06);}
+  .dhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .num{flex:none;width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;
+    font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .dhead h2{margin:0;font-size:19px;font-weight:700;color:var(--ink);}
+  .desc{color:var(--muted);font-size:14px;margin:2px 0 14px;}
+  .imgwrap{display:block;border:1px solid var(--border);border-radius:10px;overflow:hidden;
+    background:#fff;transition:box-shadow .15s ease, transform .15s ease;}
+  .imgwrap:hover{box-shadow:0 8px 24px rgba(11,31,58,.16);transform:translateY(-1px);}
+  .imgwrap img{display:block;width:100%;height:auto;}
+  .enlarge{font-size:12.5px;color:var(--accent);margin-top:8px;display:inline-block;}
+
+  footer{max-width:1140px;margin:24px auto 0;padding:22px 20px 40px;color:var(--muted);
+    font-size:12.5px;border-top:1px solid var(--border);}
+  @media (max-width:600px){
+    .hero h1{font-size:24px;} .dhead h2{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <!-- EDIT: name, title, intro, and the contact links below -->
+    <h1>Jeremiah Kim</h1>
+    <div class="title">Principal Cloud &amp; AI Architect</div>
+    <p>A selection of enterprise reference architectures I have designed for AI platforms, knowledge
+       systems, governance, and multi-cloud deployment. Each is cloud-agnostic and generalized to show
+       approach and engineering depth.</p>
+    <div class="contact">
+      <a href="mailto:jkim@njrcloud.com">jkim@njrcloud.com</a>
+      <a href="https://www.linkedin.com/in/REPLACE-ME" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/REPLACE-ME" target="_blank" rel="noopener">GitHub</a>
+      <span>Aldie, VA &middot; Washington, D.C. Metro</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <p class="lead">These diagrams are original, vendor-neutral reference designs &mdash; not the internal
+     architecture of any employer or client. Click any diagram to open it at full resolution.</p>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">1</div><h2>Enterprise Agentic AI Platform Architecture</h2></div>
+    <p class="desc">A planner-led agent team that uses enterprise tools via the Model Context Protocol (MCP),
+       grounded by a knowledge fabric, with multi-model routing, agent memory, human-in-the-loop oversight,
+       and cross-cutting guardrails, validation, and governance.</p>
+    <a class="imgwrap" href="Agentic_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="Agentic_AI_Platform_-_FINAL.png" alt="Enterprise Agentic AI Platform Architecture" loading="lazy"></a>
+    <a class="enlarge" href="Agentic_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">2</div><h2>Multi-Tenant Enterprise AI Platform Reference Architecture</h2></div>
+    <p class="desc">A centralized control plane with strict tenant isolation, provisioned models, MCP-enabled
+       tool integration, and both RAG and direct-inference paths &mdash; shown end-to-end with AWS, Azure, and
+       GCP service equivalents and a three-layer security model.</p>
+    <a class="imgwrap" href="Multi_Tenant_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="Multi_Tenant_AI_Platform_-_FINAL.png" alt="Multi-Tenant Enterprise AI Platform Reference Architecture" loading="lazy"></a>
+    <a class="enlarge" href="Multi_Tenant_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">3</div><h2>Enterprise Knowledge Fabric Architecture</h2></div>
+    <p class="desc">Connects any source, applies document intelligence and enrichment, and builds a knowledge
+       graph plus vector and metadata stores for hybrid retrieval with reranking, citations, and lineage &mdash;
+       wrapped by a governance layer across every stage.</p>
+    <a class="imgwrap" href="Enterprise_Knowledge_Fabric_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="Enterprise_Knowledge_Fabric_-_FINAL.png" alt="Enterprise Knowledge Fabric Architecture" loading="lazy"></a>
+    <a class="enlarge" href="Enterprise_Knowledge_Fabric_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">4</div><h2>Enterprise AI Governance &amp; Security Architecture</h2></div>
+    <p class="desc">An eight-layer security and governance model (Prevent &middot; Detect &middot; Govern):
+       zero-trust identity and ABAC authorization, an inline AI secure gateway, data protection and privacy,
+       model governance, immutable audit, and SIEM/SOAR &mdash; mapped to NIST, ISO 27001, SOC 2, GDPR, HIPAA,
+       and the EU AI Act.</p>
+    <a class="imgwrap" href="AI_Governance_and_Security_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="AI_Governance_and_Security_-_FINAL.png" alt="Enterprise AI Governance and Security Architecture" loading="lazy"></a>
+    <a class="enlarge" href="AI_Governance_and_Security_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">5</div><h2>Enterprise AI Platform as a Service (AI-PaaS)</h2></div>
+    <p class="desc">A self-service, multi-tenant AI platform: a portal and platform core over shared AI services,
+       infrastructure, and a data-and-AI operations foundation, with cross-cutting governance, FinOps cost
+       controls, and per-tenant isolation and chargeback.</p>
+    <a class="imgwrap" href="AI_Platform_as_a_Service_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="AI_Platform_as_a_Service_-_FINAL.png" alt="Enterprise AI Platform as a Service" loading="lazy"></a>
+    <a class="enlarge" href="AI_Platform_as_a_Service_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">6</div><h2>Enterprise LLMOps &amp; Evaluation Architecture</h2></div>
+    <p class="desc">The full LLM lifecycle &mdash; model development and fine-tuning, a rigorous evaluation and
+       red-teaming harness with quality and safety gates, safe deployment strategies, observability and drift
+       monitoring, and a continuous feedback-and-improvement loop.</p>
+    <a class="imgwrap" href="LLMOps_and_Evaluation_-_FINAL.png" target="_blank" rel="noopener">
+      <img src="LLMOps_and_Evaluation_-_FINAL.png" alt="Enterprise LLMOps and Evaluation Architecture" loading="lazy"></a>
+    <a class="enlarge" href="LLMOps_and_Evaluation_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+
+  <article class="diagram">
+    <div class="dhead"><div class="num">7</div><h2>Multi-Cloud Enablement Reference Architecture</h2></div>
+    <p class="desc">A concrete multi-cloud deployment: an AWS-centric data, RAG, and ML stack interconnected
+       with Azure and GCP over encrypted multi-cloud networking, integrated with third-party identity, secrets,
+       CI/CD, security-scanning, and observability tooling.</p>
+    <a class="imgwrap" href="multi_cloud_enablement_reference_architecture.png" target="_blank" rel="noopener">
+      <img src="multi_cloud_enablement_reference_architecture.png" alt="Multi-Cloud Enablement Reference Architecture" loading="lazy"></a>
+    <a class="enlarge" href="multi_cloud_enablement_reference_architecture.png" target="_blank" rel="noopener">Open full size &#8599;</a>
+  </article>
+</main>
+
+<footer>
+  &copy; <span id="yr"></span> Jeremiah Kim. Original reference architectures &mdash; cloud-agnostic and generalized.
+  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</footer>
+
+</body>
+</html>
