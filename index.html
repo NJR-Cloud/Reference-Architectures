@@ -1,152 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeremiah Kim — Enterprise AI &amp; Cloud Reference Architectures</title>
-<meta name="description" content="Reference architectures for enterprise AI platforms, knowledge fabrics, governance, LLMOps, and multi-cloud — by Jeremiah Kim, Principal Cloud &amp; AI Architect.">
+<meta name="description" content="Enterprise AI & cloud reference architectures and end-to-end systems architected and led by Jeremiah Kim, Principal/Lead Cloud & AI Architect — generalized and sanitized from real engagements.">
+<title>Jeremiah Kim — Enterprise AI &amp; Cloud Architectures</title>
 <style>
   :root{
-    --navy:#0B1E38; --navy2:#143C6B; --accent:#2E6FB0; --ink:#1f2c39;
-    --muted:#5a6b7c; --bg:#f5f8fc; --card:#ffffff; --border:#dce3eb;
+    --navy:#1F3864; --steel:#2E5A88; --ink:#2C2C2A; --grey:#5F5E5A;
+    --amber:#854F0B; --green:#27500A; --line:#E2E0D8; --bg:#FAF9F6; --card:#FFFFFF;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased;}
-  a{color:var(--accent);text-decoration:none;}
+  body{margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.6;}
+  a{color:var(--steel); text-decoration:none;}
   a:hover{text-decoration:underline;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
 
-  /* ===== EDIT YOUR NAME / TITLE / CONTACT HERE ===== */
-  header.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:46px 20px 40px;}
-  .hero-inner{max-width:1140px;margin:0 auto;}
-  .hero h1{margin:0 0 6px;font-size:30px;font-weight:800;letter-spacing:.2px;}
-  .hero .title{font-size:16px;font-weight:600;color:#cfe0f3;margin-bottom:14px;}
-  .hero p{max-width:780px;color:#d7e3f2;font-size:14.5px;margin:0 0 18px;}
-  .contact{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;}
-  .contact a,.contact span{color:#eaf2fb;}
-  .contact a:hover{color:#fff;}
+  header{background:var(--navy); color:#fff; padding:48px 24px 40px;}
+  header h1{margin:0 0 6px; font-size:34px; letter-spacing:0.3px;}
+  header .role{font-size:18px; color:#C9D6E8; margin:0 0 18px;}
+  header p{color:#E4EBF4; font-size:16px; max-width:840px; margin:0 0 16px;}
+  header .contact{font-size:15px; color:#C9D6E8;}
+  header .contact a{color:#fff;}
+  .nav{margin-top:18px; font-size:15px;}
+  .nav a{color:#fff; border:1px solid #3E5C86; padding:6px 14px; border-radius:6px; margin-right:8px; display:inline-block; margin-bottom:6px;}
+  .nav a:hover{background:#2A4775; text-decoration:none;}
 
-  main{max-width:1140px;margin:0 auto;padding:34px 20px 10px;}
-  .lead{font-size:15px;color:var(--muted);max-width:840px;margin:0 0 30px;}
+  .banner{background:#FBF4E6; border:1px solid #E8D6AE; color:#5A3D0C;
+    padding:16px 20px; border-radius:8px; margin:28px auto 8px; max-width:1080px; font-size:15px;}
+  .banner strong{color:var(--amber);}
 
-  article.diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;
-    padding:22px 22px 18px;margin-bottom:26px;box-shadow:0 2px 10px rgba(11,31,58,.06);}
-  .dhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
-  .num{flex:none;width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;
-    font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
-  .dhead h2{margin:0;font-size:19px;font-weight:700;color:var(--ink);}
-  .desc{color:var(--muted);font-size:14px;margin:2px 0 14px;}
-  .imgwrap{display:block;border:1px solid var(--border);border-radius:10px;overflow:hidden;
-    background:#fff;transition:box-shadow .15s ease, transform .15s ease;}
-  .imgwrap:hover{box-shadow:0 8px 24px rgba(11,31,58,.16);transform:translateY(-1px);}
-  .imgwrap img{display:block;width:100%;height:auto;}
-  .enlarge{font-size:12.5px;color:var(--accent);margin-top:8px;display:inline-block;}
+  .secthead{max-width:1080px; margin:44px auto 0; padding:0 24px;}
+  .secthead .kicker{color:var(--steel); font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin:0 0 4px;}
+  .secthead h2{font-size:26px; color:var(--navy); margin:0 0 6px;}
+  .secthead p{color:var(--ink); max-width:880px; margin:0;}
 
-  footer{max-width:1140px;margin:24px auto 0;padding:22px 20px 40px;color:var(--muted);
-    font-size:12.5px;border-top:1px solid var(--border);}
-  @media (max-width:600px){
-    .hero h1{font-size:24px;} .dhead h2{font-size:17px;}
-  }
+  section.item{max-width:1080px; margin:34px auto; padding:0 24px;}
+  .num{display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff;
+    font-weight:600; font-size:16px; margin-bottom:10px; vertical-align:middle;}
+  .badge{display:inline-block; font-size:12px; font-weight:600; letter-spacing:0.5px;
+    padding:3px 10px; border-radius:4px; margin-left:10px; vertical-align:middle;}
+  .badge.prod{background:#E9F2DD; color:var(--green); border:1px solid #BBD79A;}
+  .badge.flag{background:#EAF1FB; color:var(--navy); border:1px solid #B6CDEA;}
+  section.item h3{font-size:23px; margin:4px 0 8px; color:var(--navy);}
+  section.item .desc{color:var(--ink); max-width:880px; margin:0 0 10px;}
+  .combines{font-size:14px; color:var(--grey); margin:0 0 14px; font-style:italic;}
+  .figure{background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+  .figure img{width:100%; height:auto; display:block; border-radius:6px;}
+  .figure .open{display:inline-block; margin-top:10px; font-size:14px; font-weight:600;}
+
+  hr.sep{border:0; border-top:1px solid var(--line); max-width:1080px; margin:36px auto 0;}
+  footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 24px 48px; color:var(--grey); font-size:14px;}
+  @media (max-width:640px){ header h1{font-size:27px;} section.item h3{font-size:20px;} }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-inner">
-    <!-- EDIT: name, title, intro, and the contact links below -->
+<header>
+  <div class="wrap">
     <h1>Jeremiah Kim</h1>
-    <div class="title">Principal Cloud &amp; AI Architect</div>
-    <p>A selection of enterprise reference architectures I have designed for AI platforms, knowledge
-       systems, governance, and multi-cloud deployment. Each is cloud-agnostic and generalized to show
-       approach and engineering depth.</p>
-    <div class="contact">
-      <a href="mailto:jkim@njrcloud.com">jkim@njrcloud.com</a>
-      <a href="https://www.linkedin.com/in/jeremiah-kim-2561b910/" target="_blank" rel="noopener">LinkedIn</a>
-      <span>Aldie, VA &middot; Washington, D.C. Metro</span>
+    <p class="role">Principal / Lead Cloud &amp; AI Architect</p>
+    <p>Enterprise AI and cloud architectures, and the end-to-end systems they combine into — across federal,
+       Fortune&nbsp;100 financial services, healthcare, and technology. Each is presented as a generalized,
+       sanitized representation of work I architected and led: I served as the principal or lead architect and
+       led the implementation, with client-specific, proprietary, and security-sensitive details removed. These
+       convey the <em>type</em> of work, the architectural decisions, and the engineering depth — not the internal
+       configuration of any client or employer.</p>
+    <p class="contact">
+      <a href="mailto:jkim@njrcloud.com">jkim@njrcloud.com</a> ·
+      <a href="https://www.linkedin.com/in/jeremiah-kim-2561b910/">LinkedIn</a> ·
+      Aldie, VA · Washington, D.C. Metro
+    </p>
+    <div class="nav">
+      <a href="#systems">Combined Systems</a>
+      <a href="#flagships">Flagship Platforms</a>
+      <a href="#patterns">Reference Architectures</a>
     </div>
   </div>
 </header>
 
-<main>
-  <p class="lead">These diagrams are original, vendor-neutral reference designs &mdash; not the internal
-     architecture of any employer or client. Click any diagram to open it at full resolution.</p>
+<div class="banner">
+  <strong>About these diagrams.</strong> These are generalized, sanitized representations of real work I
+  architected and led as principal/lead architect. Client names, proprietary details, and security-sensitive
+  specifics have been removed, and the designs have been made cloud-agnostic. They illustrate approach,
+  decisions, and depth rather than any client's internal architecture. Click any diagram to open it at full resolution.
+</div>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">1</div><h2>Multi-Cloud Enablement Reference Architecture</h2></div>
-    <p class="desc">A concrete multi-cloud deployment: an AWS-centric data, RAG, and ML stack interconnected
-       with Azure and GCP over encrypted multi-cloud networking, integrated with third-party identity, secrets,
-       CI/CD, security-scanning, and observability tooling.</p>
-    <a class="imgwrap" href="multi_cloud_enablement_reference_architecture.png" target="_blank" rel="noopener">
-      <img src="multi_cloud_enablement_reference_architecture.png" alt="Multi-Cloud Enablement Reference Architecture" loading="lazy"></a>
-    <a class="enlarge" href="multi_cloud_enablement_reference_architecture.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<!-- ===================== PART ONE: COMBINED SYSTEMS ===================== -->
+<div class="secthead" id="systems">
+  <p class="kicker">Part One</p>
+  <h2>Combined Systems</h2>
+  <p>Enterprises almost never implement a single pattern in isolation. These are end-to-end systems that bring
+     multiple capabilities together the way they are actually deployed — each with its use case, the problem solved,
+     the key decision, and the proof points.</p>
+</div>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">2</div><h2>Enterprise Agentic AI Platform Architecture</h2></div>
-    <p class="desc">A planner-led agent team that uses enterprise tools via the Model Context Protocol (MCP),
-       grounded by a knowledge fabric, with multi-model routing, agent memory, human-in-the-loop oversight,
-       and cross-cutting guardrails, validation, and governance.</p>
-    <a class="imgwrap" href="Agentic_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="Agentic_AI_Platform_-_FINAL.png" alt="Enterprise Agentic AI Platform Architecture" loading="lazy"></a>
-    <a class="enlarge" href="Agentic_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<section class="item">
+  <div class="num">1</div><span class="badge prod">Production</span>
+  <h3>Secure Enterprise Application Platform</h3>
+  <p class="desc">A paved road from commit to production to monitoring that any team can deploy onto. A secure-by-default
+     landing zone with a single governed ingress (edge WAF/CDN to load balancer), serverless containers and
+     event-driven functions, a DevSecOps pipeline that builds, scans, signs, and deploys, central egress inspection,
+     and an observability platform watching everything — with guardrails enforced across the board.</p>
+  <p class="combines">Combines: landing zone · secure public access · managed containers · serverless · DevSecOps · observability</p>
+  <div class="figure">
+    <a href="Secure_Enterprise_Application_Platform.png"><img src="Secure_Enterprise_Application_Platform.png" alt="Secure Enterprise Application Platform architecture"></a>
+    <a class="open" href="Secure_Enterprise_Application_Platform.png">Open full size ↗</a>
+  </div>
+</section>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">3</div><h2>Multi-Tenant Enterprise AI Platform Reference Architecture</h2></div>
-    <p class="desc">A centralized control plane with strict tenant isolation, provisioned models, MCP-enabled
-       tool integration, and both RAG and direct-inference paths &mdash; shown end-to-end with AWS, Azure, and
-       GCP service equivalents and a three-layer security model.</p>
-    <a class="imgwrap" href="Multi_Tenant_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="Multi_Tenant_AI_Platform_-_FINAL.png" alt="Multi-Tenant Enterprise AI Platform Reference Architecture" loading="lazy"></a>
-    <a class="enlarge" href="Multi_Tenant_AI_Platform_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<section class="item">
+  <div class="num">2</div><span class="badge prod">Production</span>
+  <h3>Secure Hybrid &amp; Multi-Cloud Connectivity Backbone</h3>
+  <p class="desc">The connectivity spine for an enterprise spanning on-prem, vendors, partners, and multiple clouds — with
+     nothing on the public internet, every crossing authenticated, and consistent governance across providers.
+     Private service connectivity over peering, a per-VPC gateway for cost-optimized bulk and DR traffic, an
+     identity / zero-trust layer, and a central multi-cloud governance framework.</p>
+  <p class="combines">Combines: landing zone · vendor zero-egress passthrough · bulk transfer · multi-cloud framework · identity / zero-trust</p>
+  <div class="figure">
+    <a href="Secure_Hybrid___Multi-Cloud_Connectivity_Backbone.png"><img src="Secure_Hybrid___Multi-Cloud_Connectivity_Backbone.png" alt="Secure Hybrid and Multi-Cloud Connectivity Backbone architecture"></a>
+    <a class="open" href="Secure_Hybrid___Multi-Cloud_Connectivity_Backbone.png">Open full size ↗</a>
+  </div>
+</section>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">4</div><h2>Enterprise Knowledge Fabric Architecture</h2></div>
-    <p class="desc">Connects any source, applies document intelligence and enrichment, and builds a knowledge
-       graph plus vector and metadata stores for hybrid retrieval with reranking, citations, and lineage &mdash;
-       wrapped by a governance layer across every stage.</p>
-    <a class="imgwrap" href="Enterprise_Knowledge_Fabric_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="Enterprise_Knowledge_Fabric_-_FINAL.png" alt="Enterprise Knowledge Fabric Architecture" loading="lazy"></a>
-    <a class="enlarge" href="Enterprise_Knowledge_Fabric_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<section class="item">
+  <div class="num">3</div><span class="badge flag">Flagship · Production</span>
+  <h3>Enterprise Data &amp; AI Platform</h3>
+  <p class="desc">Trustworthy data grounding trustworthy, isolated, production AI. A governed data foundation
+     (ingest, process, govern with catalog and lineage) feeding a multi-tenant AI platform with per-tenant
+     isolation, dual-control vector stores, direct inference, managed RAG, and agents — with private connectivity
+     to sources, a zero-egress path to vendor models, and governance and assurance across both halves.</p>
+  <p class="combines">Combines: landing zone · private connectivity · AI passthrough · data platform / lakehouse · multi-tenant AI platform</p>
+  <div class="figure">
+    <a href="Enterprise_Data___AI_Platform.png"><img src="Enterprise_Data___AI_Platform.png" alt="Enterprise Data and AI Platform architecture"></a>
+    <a class="open" href="Enterprise_Data___AI_Platform.png">Open full size ↗</a>
+  </div>
+</section>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">5</div><h2>Enterprise AI Governance &amp; Security Architecture</h2></div>
-    <p class="desc">An eight-layer security and governance model (Prevent &middot; Detect &middot; Govern):
-       zero-trust identity and ABAC authorization, an inline AI secure gateway, data protection and privacy,
-       model governance, immutable audit, and SIEM/SOAR &mdash; mapped to NIST, ISO 27001, SOC 2, GDPR, HIPAA,
-       and the EU AI Act.</p>
-    <a class="imgwrap" href="AI_Governance_and_Security_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="AI_Governance_and_Security_-_FINAL.png" alt="Enterprise AI Governance and Security Architecture" loading="lazy"></a>
-    <a class="enlarge" href="AI_Governance_and_Security_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<section class="item">
+  <div class="num">4</div><span class="badge prod">Production</span>
+  <h3>Enterprise Resilience &amp; Business Continuity</h3>
+  <p class="desc">How the whole environment survives failure — a tested, RTO/RPO-driven continuity capability rather
+     than best-effort. Active/passive multi-region with cross-region replication (sync or async per tier),
+     health-based global traffic management, automated cutover and failback, rehearsed runbooks and game-days,
+     and an architecture that can extend cross-cloud for provider-failure resilience.</p>
+  <p class="combines">Design dimensions: RTO/RPO tiering · replication strategy · tested failover · cross-cloud extensibility</p>
+  <div class="figure">
+    <a href="Enterprise_Resilience___Business_Continuity.png"><img src="Enterprise_Resilience___Business_Continuity.png" alt="Enterprise Resilience and Business Continuity architecture"></a>
+    <a class="open" href="Enterprise_Resilience___Business_Continuity.png">Open full size ↗</a>
+  </div>
+</section>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">6</div><h2>Enterprise AI Platform as a Service (AI-PaaS)</h2></div>
-    <p class="desc">A self-service, multi-tenant AI platform: a portal and platform core over shared AI services,
-       infrastructure, and a data-and-AI operations foundation, with cross-cutting governance, FinOps cost
-       controls, and per-tenant isolation and chargeback.</p>
-    <a class="imgwrap" href="AI_Platform_as_a_Service_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="AI_Platform_as_a_Service_-_FINAL.png" alt="Enterprise AI Platform as a Service" loading="lazy"></a>
-    <a class="enlarge" href="AI_Platform_as_a_Service_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
+<section class="item">
+  <div class="num">5</div><span class="badge prod">Production</span>
+  <h3>Cloud Migration &amp; Modernization</h3>
+  <p class="desc">Large-estate modernization into a secure landing zone — de-risked, with compliance and governance
+     built into the destination rather than bolted on afterward. Portfolio assessment and wave planning, 6Rs
+     workload disposition (retire, retain, rehost, replatform, repurchase, refactor), and dependency-aware
+     migration waves with validation and rollback at each step.</p>
+  <p class="combines">Approach: landing zone first · 6Rs disposition · dependency-aware waves · reversible at each step</p>
+  <div class="figure">
+    <a href="Cloud_Migration_and_Modernization.png"><img src="Cloud_Migration_and_Modernization.png" alt="Cloud Migration and Modernization architecture"></a>
+    <a class="open" href="Cloud_Migration_and_Modernization.png">Open full size ↗</a>
+  </div>
+</section>
 
-  <article class="diagram">
-    <div class="dhead"><div class="num">7</div><h2>Enterprise LLMOps &amp; Evaluation Architecture</h2></div>
-    <p class="desc">The full LLM lifecycle &mdash; model development and fine-tuning, a rigorous evaluation and
-       red-teaming harness with quality and safety gates, safe deployment strategies, observability and drift
-       monitoring, and a continuous feedback-and-improvement loop.</p>
-    <a class="imgwrap" href="LLMOps_and_Evaluation_-_FINAL.png" target="_blank" rel="noopener">
-      <img src="LLMOps_and_Evaluation_-_FINAL.png" alt="Enterprise LLMOps and Evaluation Architecture" loading="lazy"></a>
-    <a class="enlarge" href="LLMOps_and_Evaluation_-_FINAL.png" target="_blank" rel="noopener">Open full size &#8599;</a>
-  </article>
-</main>
+<hr class="sep">
+
+<!-- ===================== PART TWO: FLAGSHIP PLATFORMS ===================== -->
+<div class="secthead" id="flagships">
+  <p class="kicker">Part Two</p>
+  <h2>Flagship Platforms</h2>
+  <p>Larger, standalone systems that anchor the portfolio — each architected and led end-to-end.</p>
+</div>
+
+<section class="item">
+  <div class="num">6</div><span class="badge flag">Flagship · Production</span>
+  <h3>Multi-Cloud Framework &amp; Solution Accelerator</h3>
+  <p class="desc">A central management plane governing many clouds through one control point — rather than running each
+     cloud as an independent silo. Hub-and-spoke with per-cloud, per-stage spoke environments; centralized
+     governance, IaC-driven provisioning with a self-service catalog, unified FinOps, unified identity and access,
+     multi-cloud and hybrid networking, cross-cloud DR/HA, and unified security posture.</p>
+  <div class="figure">
+    <a href="Multi-Cloud_Framework___Solution_Accelerator.png"><img src="Multi-Cloud_Framework___Solution_Accelerator.png" alt="Multi-Cloud Framework and Solution Accelerator architecture"></a>
+    <a class="open" href="Multi-Cloud_Framework___Solution_Accelerator.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">7</div><span class="badge flag">Flagship · Production</span>
+  <h3>Multi-Tenant AI Platform</h3>
+  <p class="desc">One control plane, isolated data planes — many organizational units, zero shared blast radius. A
+     three-layer enforcement chain (verified token to policy engine to attribute tags) where tags atomically
+     drive access role, content-safety configuration, knowledge routing, and vector isolation; dual-control vector
+     isolation; deny-equals-zero-tokens; per-tenant keys; direct inference, managed RAG, and agents; with an
+     evaluation gate, faithfulness monitoring, model registry, and immutable audit in production.</p>
+  <div class="figure">
+    <a href="Multi-Tenant_AI_Platform.png"><img src="Multi-Tenant_AI_Platform.png" alt="Multi-Tenant AI Platform architecture"></a>
+    <a class="open" href="Multi-Tenant_AI_Platform.png">Open full size ↗</a>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ===================== PART THREE: REFERENCE ARCHITECTURES ===================== -->
+<div class="secthead" id="patterns">
+  <p class="kicker">Part Three</p>
+  <h2>Reference Architectures</h2>
+  <p>Cloud-agnostic reference designs for the AI and platform building blocks behind the systems above —
+     generalized to show approach and engineering depth.</p>
+</div>
+
+<section class="item">
+  <div class="num">8</div>
+  <h3>Multi-Cloud Enablement Reference Architecture</h3>
+  <p class="desc">A concrete multi-cloud deployment: an AWS-centric data, RAG, and ML stack interconnected with Azure
+     and GCP over encrypted multi-cloud networking, integrated with third-party identity, secrets, CI/CD,
+     security-scanning, and observability tooling.</p>
+  <div class="figure">
+    <a href="multi_cloud_enablement_reference_architecture.png"><img src="multi_cloud_enablement_reference_architecture.png" alt="Multi-Cloud Enablement Reference Architecture"></a>
+    <a class="open" href="multi_cloud_enablement_reference_architecture.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">9</div>
+  <h3>Enterprise Agentic AI Platform Architecture</h3>
+  <p class="desc">A planner-led agent team that uses enterprise tools via the Model Context Protocol (MCP), grounded by a
+     knowledge fabric, with multi-model routing, agent memory, human-in-the-loop oversight, and cross-cutting
+     guardrails, validation, and governance.</p>
+  <div class="figure">
+    <a href="Agentic_AI_Platform_-_FINAL.png"><img src="Agentic_AI_Platform_-_FINAL.png" alt="Enterprise Agentic AI Platform Architecture"></a>
+    <a class="open" href="Agentic_AI_Platform_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">10</div>
+  <h3>Multi-Tenant Enterprise AI Platform Reference Architecture</h3>
+  <p class="desc">A centralized control plane with strict tenant isolation, provisioned models, MCP-enabled tool
+     integration, and both RAG and direct-inference paths — shown end-to-end with AWS, Azure, and GCP service
+     equivalents and a three-layer security model.</p>
+  <div class="figure">
+    <a href="Multi_Tenant_AI_Platform_-_FINAL.png"><img src="Multi_Tenant_AI_Platform_-_FINAL.png" alt="Multi-Tenant Enterprise AI Platform Reference Architecture"></a>
+    <a class="open" href="Multi_Tenant_AI_Platform_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">11</div>
+  <h3>Enterprise Knowledge Fabric Architecture</h3>
+  <p class="desc">Connects any source, applies document intelligence and enrichment, and builds a knowledge graph plus
+     vector and metadata stores for hybrid retrieval with reranking, citations, and lineage — wrapped by a
+     governance layer across every stage.</p>
+  <div class="figure">
+    <a href="Enterprise_Knowledge_Fabric_-_FINAL.png"><img src="Enterprise_Knowledge_Fabric_-_FINAL.png" alt="Enterprise Knowledge Fabric Architecture"></a>
+    <a class="open" href="Enterprise_Knowledge_Fabric_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">12</div>
+  <h3>Enterprise AI Governance &amp; Security Architecture</h3>
+  <p class="desc">An eight-layer security and governance model (Prevent · Detect · Govern): zero-trust identity and ABAC
+     authorization, an inline AI secure gateway, data protection and privacy, model governance, immutable audit,
+     and SIEM/SOAR — mapped to NIST, ISO 27001, SOC 2, GDPR, HIPAA, and the EU AI Act.</p>
+  <div class="figure">
+    <a href="AI_Governance_and_Security_-_FINAL.png"><img src="AI_Governance_and_Security_-_FINAL.png" alt="Enterprise AI Governance and Security Architecture"></a>
+    <a class="open" href="AI_Governance_and_Security_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">13</div>
+  <h3>Enterprise AI Platform as a Service (AI-PaaS)</h3>
+  <p class="desc">A self-service, multi-tenant AI platform: a portal and platform core over shared AI services,
+     infrastructure, and a data-and-AI operations foundation, with cross-cutting governance, FinOps cost controls,
+     and per-tenant isolation and chargeback.</p>
+  <div class="figure">
+    <a href="AI_Platform_as_a_Service_-_FINAL.png"><img src="AI_Platform_as_a_Service_-_FINAL.png" alt="Enterprise AI Platform as a Service"></a>
+    <a class="open" href="AI_Platform_as_a_Service_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
+
+<section class="item">
+  <div class="num">14</div>
+  <h3>Enterprise LLMOps &amp; Evaluation Architecture</h3>
+  <p class="desc">The full LLM lifecycle — model development and fine-tuning, a rigorous evaluation and red-teaming harness
+     with quality and safety gates, safe deployment strategies, observability and drift monitoring, and a
+     continuous feedback-and-improvement loop.</p>
+  <div class="figure">
+    <a href="LLMOps_and_Evaluation_-_FINAL.png"><img src="LLMOps_and_Evaluation_-_FINAL.png" alt="Enterprise LLMOps and Evaluation Architecture"></a>
+    <a class="open" href="LLMOps_and_Evaluation_-_FINAL.png">Open full size ↗</a>
+  </div>
+</section>
 
 <footer>
-  &copy; <span id="yr"></span> Jeremiah Kim. Original reference architectures &mdash; cloud-agnostic and generalized.
-  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+  <div class="wrap">
+    <p>© Jeremiah Kim. Generalized, sanitized representations of work architected and led as principal/lead architect.
+       Client-specific, proprietary, and security-sensitive details removed. Cloud-agnostic.</p>
+  </div>
 </footer>
 
 </body>
